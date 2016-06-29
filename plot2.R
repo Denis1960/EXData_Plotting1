@@ -1,4 +1,4 @@
-plot1 <- function() 
+plot2 <- function() 
 {
   
   #set working directory to location of data
@@ -23,14 +23,17 @@ plot1 <- function()
   #Create the timestamp to be used in graphs
   powerDT$dateTime <- as.POSIXct(strptime(paste(powerDT$Date, powerDT$Time, sep = " "),
                                           format = "%Y-%m-%d %H:%M:%S"))
+  
   #Convert the power variable to numeric
-  powerDT$Global_active_power <- as.numeric(as.character(powerDT$Global_active_power))
+  powerDT$Global_active_power <- as.numeric(powerDT$Global_active_power)
   
-  #Create the plot
-  hist(powerDT$Global_active_power, main = paste("Global Active Power"), col="red", xlab="Global Active Power ( in kilowatts)")
+  #Create the png device and then plot
+  png(file = "plot2.png", width = 480, height = 480, units = "px")
+  plot(powerDT$dateTime,powerDT$Global_active_power, type="l",
+       ylab="Global Active Power (kilowatts)", xlab="")
   
-  #Save the plot to disk
-  dev.copy(png, file="plot1.png", width=480, height=480)
+  
+  #Turn off the dev device
   dev.off()
   
 }
